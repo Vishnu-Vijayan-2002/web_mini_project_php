@@ -1,0 +1,24 @@
+body {
+    background-color: #f8f9fa;
+}
+.form-container {
+    width: 100%;
+    max-width: 100%;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.center-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn_close{
+    font-size: 20px;
+    cursor: pointer;
+}
+.form-container i{
+    margin-left: 99%;
+}

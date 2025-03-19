@@ -1,0 +1,305 @@
+/* 🌟 Global Styling */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* 🌟 Main Container */
+.main {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 50px 20px;
+}
+
+/* 🌟 Hero Section Container */
+.hero-section {
+    max-width: 1100px;
+    background: #fff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+    padding: 50px 30px;
+    margin: 100px auto;
+    transition: all 0.3s ease;
+}
+
+.hero-section:hover {
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.hero-image-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.hero-banner {
+    width: 90%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* 🌟 Hero Content Styling */
+.hero-content {
+    padding: 30px;
+}
+
+.hero-subheading {
+    color: #777;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+h1 {
+    font-size: 40px;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 25px;
+    line-height: 1.3;
+}
+
+.hero-description {
+    font-size: 18px;
+    color: #555;
+    line-height: 1.8;
+}
+
+/* 🌟 Card Styling */
+.card {
+    background: #fff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    width: 500px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    /* margin-top: -200px; */
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+/* 🌟 Toggle Container */
+.toggle-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.toggle-button {
+    background: none;
+    border: none;
+    padding: 12px 30px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 18px;
+    transition: color 0.3s, border-bottom 0.3s;
+}
+
+.toggle-button.active {
+    border-bottom: 3px solid #f7b500;
+    color: #f7b500;
+}
+
+/* 🌟 Donation Amount Section */
+.amount {
+    font-size: 36px;
+    font-weight: bold;
+    color: #0077b6;
+    margin-bottom: 15px;
+}
+
+.impact {
+    font-size: 20px;
+    color: #444;
+}
+
+/* 🌟 Donation Options */
+.amount-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.donation-option {
+    background: #e3e3e3;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 18px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.donation-option:hover,
+.donation-option.selected {
+    background: #0077b6;
+    color: #fff;
+    box-shadow: 0 5px 15px rgba(0, 119, 182, 0.4);
+}
+
+/* 🌟 Input Fields */
+input[type="number"],
+.email-input {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    margin-top: 15px;
+    transition: border 0.3s;
+}
+
+input[type="number"]:focus,
+.email-input:focus {
+    border-color: #0077b6;
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 119, 182, 0.2);
+}
+
+/* 🌟 CTA and Meals Buttons */
+.cta-button, .meals {
+    border: none;
+    padding: 18px;
+    width: 100%;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background 0.3s;
+}
+
+.cta-button {
+    background: #f7b500;
+}
+
+.meals {
+    background-color: #029216;
+}
+
+.cta-button:hover {
+    background: #ff9800;
+}
+
+.meals:hover {
+    background: #027d12;
+}
+
+/* 🌟 Responsive Design */
+@media (max-width: 1024px) {
+    .main {
+        gap: 30px;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .hero-section {
+        max-width: 95%;
+        padding: 40px 20px;
+    }
+
+    h1 {
+        font-size: 34px;
+    }
+
+    .card {
+        width: 90%;
+    }
+
+    .hero-banner {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .toggle-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .hero-content {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .hero-description {
+        font-size: 16px;
+    }
+
+    .amount {
+        font-size: 28px;
+    }
+
+    .impact {
+        font-size: 16px;
+    }
+
+    .donation-option {
+        padding: 12px 20px;
+        font-size: 16px;
+    }
+
+    .cta-button, .meals {
+        font-size: 18px;
+        padding: 15px;
+    }
+
+    .card {
+        width: 100%;
+        padding: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section {
+        padding: 30px 15px;
+    }
+
+    .hero-banner {
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .hero-description {
+        font-size: 14px;
+    }
+
+    .amount {
+        font-size: 24px;
+    }
+
+    .impact {
+        font-size: 14px;
+    }
+
+    .donation-option {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    .cta-button, .meals {
+        font-size: 16px;
+        padding: 12px;
+    }
+}

@@ -1,0 +1,92 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.session p{
+    font-size: 20px;
+}
+.session h1{
+    font-size: 55px;
+}
+.session{
+    margin-top: 100px;
+    margin-bottom: 50px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    max-width: 1200px;
+    flex-wrap: wrap;
+    margin-top: 70px;
+    margin-bottom: 70px;
+}
+
+.card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 400px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.card img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 20px;
+}
+
+.card h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 14px;
+    color: #555;
+}
+
+.card .stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px 0;
+    font-size: 14px;
+}
+
+.stats span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.no{
+    color: rgb(44, 171, 255);
+}
+#btn{
+    display: block;
+    width: 100%;
+    padding: 12px;
+    text-align: center;
+    background: #ffcc00;
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 12px 12px 7px 7px;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: #ff9900;
+}

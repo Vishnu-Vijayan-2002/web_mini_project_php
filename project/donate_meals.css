@@ -1,0 +1,58 @@
+/* Donate Section Styling */
+.donate-section {
+    background-color: #f8f9fa;
+    padding: 60px 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-container {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.form-container:hover {
+    transform: scale(1.02);
+}
+
+/* Form fields */
+.form-control, .form-select {
+    border: 1px solid #ced4da;
+    padding: 12px;
+    font-size: 16px;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 8px rgba(40, 167, 69, 0.5);
+}
+
+/* Location fields */
+.row .col-md-6 {
+    margin-bottom: 20px;
+}
+
+/* Submit button */
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .donate-section {
+        padding: 30px 15px;
+    }
+
+    .form-container {
+        padding: 20px;
+    }
+}
