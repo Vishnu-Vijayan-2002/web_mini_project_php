@@ -12,6 +12,13 @@
 <i class="fa-solid fa-xmark btn_close" data-bs-dismiss="modal" style="color: black;"></i>
     <h3 class="text-center">Login</h3>
     <form>
+    <div class="mb-3">
+            <label class="form-label">User Type</label>
+            <select name="user_type" class="form-control" required>
+                <option value="volunteer">Volunteer</option>
+                <option value="donor">Donor</option>
+            </select>
+        </div>
         <div class="mb-3">
             <label class="form-label">Email</label>
             <input type="email" class="form-control" placeholder="Enter email" required>
@@ -41,21 +48,12 @@
             <input type="email" class="form-control" placeholder="Enter email" required>
         </div>
         <div class="mb-3">
-            <label class="form-label">Aadhaar Number</label>
-            <input type="text" class="form-control" placeholder="Enter Aadhaar" required>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">User Type</label>
-            <select class="form-select" required>
-                <option selected disabled value="">Choose...</option>
-                <option>Donor</option>
-                <option>Volunteer</option>
-                <option>Recipient</option>
-            </select>
-        </div>
-        <div class="mb-3">
             <label class="form-label">Password</label>
             <input type="password" class="form-control" placeholder="Enter password" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Confirm Password</label>
+            <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm password" required>
         </div>
         <button class="btn btn-success w-100">Register</button>
     </form>

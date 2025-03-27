@@ -1,0 +1,149 @@
+/* Volunteer Section Scoped Only */
+.volunteer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+/* Card Styling */
+.volunteer-container .card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-width: 800px;
+    transition: 0.3s;
+}
+
+.volunteer-container .card:hover {
+    transform: translateY(-8px);
+}
+
+/* Image */
+.volunteer-container .card img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+}
+
+/* Content Styling */
+.volunteer-container .content {
+    padding: 25px;
+    text-align: center;
+}
+
+.volunteer-container .content h2 {
+    font-size: 26px;
+    color: #0056b3;  /* Blue title color */
+    margin-bottom: 15px;
+}
+
+.volunteer-container .content p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 25px;
+}
+
+/* Buttons Container */
+.volunteer-container .actions_btn {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+/* Buttons Styling */
+.volunteer-container .btn {
+    padding: 12px 28px;
+    font-size: 16px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 25px;
+    transition: 0.3s;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Read More - Blue Button */
+.volunteer-container .btn.more {
+    background: #0056b3;  /* Blue color */
+}
+
+.volunteer-container .btn.more:hover {
+    background: #00408a;
+}
+
+/* Apply Now - Yellow Button */
+.volunteer-container .btn.apply {
+    background: #f39c12;  /* Yellow color */
+}
+
+.volunteer-container .btn.apply:hover {
+    background: #d98c10;
+}
+
+/* Application Status - Green Button */
+.volunteer-container .btn.status {
+    background: #28a745;  /* Green color */
+    color: white;
+    transition: 0.3s;
+}
+
+.volunteer-container .btn.status:hover {
+    background: #218838;
+}
+
+/* Smoothly Expandable Section */
+.volunteer-container .hidden-details {
+    max-height: 0;
+    margin-top: 20px;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.5s ease;
+    padding: 0 25px;  /* Start with zero padding */
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Expanded (active) state */
+.volunteer-container .hidden-details {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.volunteer-container .hidden-details.active {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: none;  /* Expand fully */
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .volunteer-container .card {
+        max-width: 95%;
+    }
+
+    .volunteer-container .content h2 {
+        font-size: 22px;
+    }
+
+    .volunteer-container .content p {
+        font-size: 16px;
+    }
+
+    .volunteer-container .btn {
+        padding: 10px 22px;
+        font-size: 14px;
+    }
+
+    /* Button Wrap on Smaller Screens */
+    .volunteer-container .actions_btn {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

@@ -142,6 +142,8 @@
             </div>
         </div>
     </section>
+<!-- volunteer session -->
+<?php  include 'volunteer.php' ?>
 <!-- mail section-->
 <div class="main_mail_section">
   <div class="newsletter-container">
