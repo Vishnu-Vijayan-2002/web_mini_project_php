@@ -1,6 +1,6 @@
 <?php
 // Dummy status for testing - Replace with real database query
-$status = 'approved';  // Options: 'pending' or 'approved'
+$status = 'pending';  // Options: 'pending' or 'approved'
 ?>
 
 <!DOCTYPE html>

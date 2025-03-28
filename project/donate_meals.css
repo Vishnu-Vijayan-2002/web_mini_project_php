@@ -1,58 +1,123 @@
-/* Donate Section Styling */
+/* ======== General Styles ======== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ======== Body Styling ======== */
+body {
+    background: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* ======== Container & Form Styling ======== */
 .donate-section {
-    background-color: #f8f9fa;
-    padding: 60px 20px;
-    border-radius: 12px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    padding: 40px 0;
 }
 
 .form-container {
-    background: #ffffff;
-    border-radius: 12px;
+    max-width: 700px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 10px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
+    transition: 0.3s ease-in-out;
 }
 
-.form-container:hover {
-    transform: scale(1.02);
+/* ======== Form Title ======== */
+h1 {
+    font-size: 2rem;
+    color: #28a745;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
-/* Form fields */
-.form-control, .form-select {
-    border: 1px solid #ced4da;
+/* ======== Form Labels ======== */
+label {
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+/* ======== Input Fields ======== */
+input, select {
+    width: 100%;
     padding: 12px;
-    font-size: 16px;
-}
-
-.form-control:focus, .form-select:focus {
-    border-color: #28a745;
-    box-shadow: 0 0 8px rgba(40, 167, 69, 0.5);
-}
-
-/* Location fields */
-.row .col-md-6 {
+    font-size: 14px;
     margin-bottom: 20px;
-}
-
-/* Submit button */
-.btn-success {
-    background-color: #28a745;
-    border: none;
+    border: 1px solid #ccc;
+    border-radius: 6px;
     transition: 0.3s;
 }
 
-.btn-success:hover {
-    background-color: #218838;
-    transform: translateY(-2px);
+input:focus, select:focus {
+    outline: none;
+    border-color: #28a745;
+    box-shadow: 0 0 8px rgba(40, 167, 69, 0.3);
 }
 
-/* Responsive Design */
+/* ======== Button Styling ======== */
+.btn-success {
+    background: #28a745;
+    color: #fff;
+    font-size: 18px;
+    padding: 12px 0;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 100%;
+    font-weight: bold;
+}
+
+.btn-success:hover {
+    background: #218838;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(40, 167, 69, 0.2);
+}
+
+/* ======== Form Fields Layout ======== */
+.row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.col-md-6 {
+    flex: 1;
+}
+
+/* ======== Input Placeholder Styling ======== */
+::placeholder {
+    color: #aaa;
+    font-style: italic;
+}
+
+/* ======== Field Error Highlighting ======== */
+input:invalid, select:invalid {
+    border-color: #dc3545;
+    box-shadow: 0 0 8px rgba(220, 53, 69, 0.3);
+}
+
+/* ======== Mobile Responsiveness ======== */
 @media (max-width: 768px) {
-    .donate-section {
-        padding: 30px 15px;
+    .form-container {
+        width: 95%;
+        padding: 30px;
     }
 
-    .form-container {
-        padding: 20px;
+    .row {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .btn-success {
+        font-size: 16px;
+        padding: 10px;
     }
 }

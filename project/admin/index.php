@@ -7,9 +7,7 @@
 </head>
 <?php
 echo"hello";
-echo"world"
-?>
-
-    
+echo"world hoiii"
+?>  
 </body>
 </html>
