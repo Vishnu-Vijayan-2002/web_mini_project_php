@@ -13,8 +13,7 @@
     <div class="footer-container">
         <!-- Left Section -->
         <div class="footer-left">
-            <p>Part of the United Nations WFP</p>
-            <img src="https://www.logo.wine/a/logo/World_Food_Programme/World_Food_Programme-Logo.wine.svg" alt="World Food Programme">
+            <img  style="width: 50px;height:50px" src="./images/food.png">
         </div>
 
         <!-- Center Links -->
@@ -35,8 +34,14 @@
             <a href="#"><i class="fab fa-youtube"></i></a>
             <a href="#"><i class="fas fa-envelope"></i></a>
         </div>
-        <p>ShareTheMeal © 2025</p>
+        <p>FoodShare © 2025</p>
     </div>
 </footer>
 </body>
+<style>
+    img{
+      height: 60px;
+      width: 60px;
+    }
+</style>
 </html>

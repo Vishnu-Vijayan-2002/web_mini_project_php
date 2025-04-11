@@ -22,21 +22,22 @@
 <div class="main">
 <div class="hero-section">
     <div class="hero-image-wrapper">
-        <img src="https://images.ctfassets.net/z0x29akdg5eb/6VnhBZx3jaRKjcBBdAZDGb/349b6786025b078c9e719191a4abdf8f/Cover_Photo_November_12.JPG?w=741&h=494&fit=fill&q=80&fm=avif" 
+        <img  src="https://images.ctfassets.net/z0x29akdg5eb/6VnhBZx3jaRKjcBBdAZDGb/349b6786025b078c9e719191a4abdf8f/Cover_Photo_November_12.JPG?w=741&h=494&fit=fill&q=80&fm=avif" 
         alt="Mother and child" class="hero-banner">
     </div>
 
     <div class="hero-content">
-        <p class="hero-subheading">There's one thing we'll never stop believing in</p>
-        <h1>Together, we can be the generation<br>that ends global hunger.</h1>
-        
-        <p class="hero-description">
-            There are <strong>783 million hungry people</strong> in the world. But hunger is entirely solvable. 
-            Every day, people around the world are sharing their meal, and the 
-            <strong>United Nations World Food Programme</strong> is on the frontlines ensuring it reaches 
-            those most in need. Imagine the collective impact we could have if we all shared the meal.
-        </p>
-    </div>
+    <p class="hero-subheading">We believe in a world without hunger.</p>
+    <h1>Together, we can create a future<br>where no one goes to bed hungry.</h1>
+
+    <p class="hero-description">
+        Millions of people around the world struggle with hunger every day — but it doesn’t have to be this way.  
+        Hunger is a challenge we can overcome through compassion, action, and collective support.  
+        When we come together and share what we can, even a single meal can bring hope, strength, and dignity.
+        <strong>Every act of kindness counts. Every meal matters.</strong>
+    </p>
+</div>
+
 </div>
     <div class="card">
       <!-- Toggle Buttons -->

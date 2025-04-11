@@ -12,10 +12,10 @@
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg bg-light">
+<nav class="navbar navbar-expand-lg bg-light fixed-top shadow-sm">
   <div class="container-fluid">
     <a class="navbar-brand" onclick="window.location.href='index.php'" href="#">
-      <img src="https://sharethemeal.org/_static/icons/stm-logo.svg" alt="Logo">
+      <img src="./images/food.png" alt="Logo">
     </a>
 
     <!-- Toggler -->
@@ -26,9 +26,9 @@
     <!-- Navbar Content -->
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" onclick="window.location.href='Fundraising.php'" href="#">Fundraising goals</a>
-        </li>
+        </li> -->
         <li class="nav-item">
           <a class="nav-link" onclick="window.location.href='about.php'" href="#">About us</a>
         </li>

@@ -1,6 +1,23 @@
-.banner{
-    margin-bottom: 60px;
+.banner {
+    height: 550px; /* adjust as needed */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+.banner img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    filter: brightness(0.5); /* darken image for text readability */
+}
+
+.content-overlay {
+    text-align: center;
+    color: white;
+}
+
 .take_action{
     font-weight: 500;
 

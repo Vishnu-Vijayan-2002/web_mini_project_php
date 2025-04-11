@@ -16,19 +16,16 @@
    <!-- header -->
     <?php include 'header.php'?>
     <!-- banner -->
-    <div class="d-flex flex-column flex-md-row align-items-center p-5 bg-white border rounded shadow-sm banner">
-        <div class="flex-grow-1 me-md-4 text-center text-md-start">
-            <h1 class="fw-bold">Fight hunger with the ShareTheMeal app</h1>
-            <p class="text-muted">With just a few taps on your phone, you can donate to someone in need, and the United Nations World Food Programme will deliver the meals. Help us end hunger by downloading the ShareTheMeal app today.</p>
-            <div class="mt-3">
-              <a href="#"><img src="https://sharethemeal.org/_static/badges/store-android-en.svg" alt="Google Play" class="store-badge me-2"></a>
-              <a href="#"><img src="https://sharethemeal.org/_static/badges/store-ios-en.svg" alt="App Store" class="store-badge"></a>
-             </div>
-        </div>
-        <div class="mt-4 mt-md-0">
-            <img src="./images/banner.jpg" alt="ShareTheMeal App" class="img-fluid rounded">
-        </div>
-    </div>
+    <div class="banner position-relative text-center text-white">
+  <img src="./images/banner.jpg" alt="Donation Banner" class="img-fluid w-100 h-100 object-fit-cover position-absolute top-0 start-0 z-0">
+  
+  <div class="content-overlay position-relative z-1 p-5">
+      <h1 class="fw-bold">Join the mission to end hunger</h1>
+      <p class="lead">Every tap brings a meal to someone in need. Take action and make a difference today.</p>
+      <a href="#donate" onclick="window.location.href='donate.php'"  id="donateBtn" class="btn btn-warning btn-lg mt-3">Donate Now</a>
+  </div>
+</div>
+
     <!-- sign up -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -38,27 +35,33 @@
   </div>
 </div>
 <!-- take action -->
- <div class="take">
-    <h1 class="text-center take_action">Take action</h1>
-    <p class="text-center text-muted">Simply browse through our fundraising goals and donate to the causes that matter to you.</p>
-   </div>
-   <div class="main_urgent_card">
-    <div class="urgent_card">
-        <div class="left_img">
-            <img style="width: 550px;" class="img-fluid" src="./images/card.jpeg" alt="">
-        </div> 
-        <div class="main_right_content">
-            <div class="right_content">
-                <h1>Support Families with Food & Cash Donations</h1>
-                <p>We provide essential food supplies and direct cash assistance to those in need across the country. Your contribution can make a real difference.</p>
-                <div class="btn_group">
-                    <button onclick="window.location.href='donate.php'" class="left">Read more</button>
-                    <button onclick="window.location.href='donate.php'"  id="donateBtn"  class="right btn">Donate Now</button>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="take py-5 bg-light">
+  <h1 class="text-center take_action fw-bold">Take Action, Create Impact</h1>
+  <p class="text-center text-muted">What starts as a thought, turns into action. Let your compassion flow — every meal and every rupee can change a life.</p>
 </div>
+
+<div class="main_urgent_card container my-5">
+  <div class="urgent_card d-flex flex-column flex-lg-row shadow rounded overflow-hidden">
+    
+    <!-- Left: Image of People Donating -->
+    <div class="left_img">
+      <img src="./images/hunger1.jpg" alt="People Donating" class="img-fluid w-100 h-100 object-fit-cover" style="max-height: 400px;">
+    </div>
+
+    <!-- Right: Emotional Text + Buttons -->
+    <div class="main_right_content p-4 bg-white">
+      <div class="right_content">
+        <h2 class="fw-bold">Your Heart in Motion</h2>
+        <p class="text-muted">The words spoken, the thoughts wandering in your mind — they now take form in a warm meal, a helping hand, and a message of hope. Let your kindness be seen, heard, and felt by those who need it most.</p>
+        <div class="btn_group mt-4 d-flex gap-3">
+          <button onclick="window.location.href='donate.php'" id="donateBtn" class="btn btn-warning">Donate Now</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 
      <!-- crads -->
      <!-- <div class="card-container">
