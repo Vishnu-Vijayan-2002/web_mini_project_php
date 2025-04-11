@@ -1,3 +1,33 @@
+/* Scrollbar Track */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  
+  /* Scrollbar Thumb */
+  ::-webkit-scrollbar-thumb {
+    background: #f1c40f; /* Yellow color for thumb */
+    border-radius: 10px;
+    border: 2px solid white;
+  }
+  
+  /* Scrollbar Track Background */
+  ::-webkit-scrollbar-track {
+    background: #f8f9fa; /* Light background */
+    border-radius: 10px;
+  }
+  
+  /* Scrollbar Corner */
+  ::-webkit-scrollbar-corner {
+    background: #f8f9fa;
+  }
+  
+  /* Firefox scrollbar support */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #f1c40f #f8f9fa;
+  }
+  
 .banner {
     height: 550px; /* adjust as needed */
     overflow: hidden;

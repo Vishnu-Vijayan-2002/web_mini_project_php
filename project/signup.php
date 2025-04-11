@@ -20,16 +20,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $check->bind_param("s", $email);
             $check->execute();
             $check->store_result();
-
+            
             if ($check->num_rows > 0) {
                 $registerMsg = "Email already exists.";
             } else {
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
                 $insert = $conn->prepare("INSERT INTO users (name, email, password, user_type) VALUES (?, ?, ?, 'donor')");
                 $insert->bind_param("sss", $name, $email, $hashed_password);
-
+                
                 if ($insert->execute()) {
-                    $registerMsg = "Registration successful! Please login.";
+                    $registerMsg = "Registered successfully! Please login.";
                     $openLogin = true;
                 } else {
                     $registerMsg = "Registration failed. Please try again.";
@@ -43,20 +43,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = trim($_POST['login_email']);
         $password = $_POST['login_password'];
         $user_type = $_POST['login_user_type'];
-
+    
         $stmt = $conn->prepare("SELECT * FROM users WHERE email=? AND user_type=?");
         $stmt->bind_param("ss", $email, $user_type);
         $stmt->execute();
         $result = $stmt->get_result();
-
+    
         if ($result && $result->num_rows === 1) {
             $user = $result->fetch_assoc();
-
-            if (password_verify($password, $user['password'])) {
-                $redirectPage = ($user_type === 'volunteer')
-                    ? 'volunteer_index.php?email=' . urlencode($email)
-                    : 'index.php';
-
+    
+            // ⚠️ Direct string comparison (assumes plain text password stored in DB)
+            if ($password === $user['password']) {
+    
+                // ✅ Determine redirection page based on user type
+                if ($user_type === 'volunteer') {
+                    $redirectPage = 'volunteer_index.php?email=' . urlencode($email);
+                } elseif ($user_type === 'admin') {
+                    $redirectPage = 'admin/index.php';
+                } else {
+                    $redirectPage = 'index.php';
+                }
+    
+                // ✅ Set localStorage and redirect
                 echo "<script>
                     localStorage.setItem('user_id', '{$user['id']}');
                     localStorage.setItem('user_name', '{$user['name']}');
@@ -110,22 +118,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
 
-<!-- Display Messages -->
-<?php if (!empty($loginMsg)): ?>
+<!-- Display messages -->
+<?php if (!empty($loginMsg) && $loginMsg !== "success"): ?>
     <div class="alert alert-danger">
         <?= htmlspecialchars($loginMsg) ?>
     </div>
 <?php endif; ?>
 
 <?php if (!empty($registerMsg)): ?>
-    <div class="alert alert-<?= stripos($registerMsg, 'success') !== false ? 'success' : 'danger' ?>">
+    <div class="alert alert-<?= strpos($registerMsg, 'success') !== false ? 'success' : 'danger' ?>">
         <?= htmlspecialchars($registerMsg) ?>
     </div>
 <?php endif; ?>
-
 <!-- LOGIN FORM -->
 <div id="loginForm" class="form-container" style="<?= $openLogin ? '' : 'display: none;' ?>">
-    <i class="fa-solid fa-xmark btn_close" onclick="document.getElementById('loginForm').style.display='none';"></i>
+    <i class="fa-solid fa-xmark btn_close" data-bs-dismiss="modal" style="color: black;"></i>
     <h3 class="text-center">Login</h3>
 
     <form method="POST">
@@ -154,7 +161,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!-- REGISTER FORM -->
 <div id="registerForm" class="form-container" style="<?= $openLogin ? 'display: none;' : '' ?>">
-    <i class="fa-solid fa-xmark btn_close" onclick="document.getElementById('registerForm').style.display='none';"></i>
+    <i class="fa-solid fa-xmark btn_close" data-bs-dismiss="modal" style="color: black;"></i>
     <h3 class="text-center">Register</h3>
 
     <form method="POST">
@@ -181,7 +188,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </p>
 </div>
 
-<!-- JavaScript Switch -->
 <script>
     document.getElementById("showRegister").addEventListener("click", function(e) {
         e.preventDefault();
@@ -195,6 +201,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         document.getElementById("loginForm").style.display = "block";
     });
 
+    // Auto-switch to login form after successful registration
     <?php if ($openLogin): ?>
         document.getElementById("registerForm").style.display = "none";
         document.getElementById("loginForm").style.display = "block";
