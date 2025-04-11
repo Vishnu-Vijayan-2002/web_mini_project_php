@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,25 +42,26 @@
     <h1 class="text-center take_action">Take action</h1>
     <p class="text-center text-muted">Simply browse through our fundraising goals and donate to the causes that matter to you.</p>
    </div>
-  <div class="main_urgent_card">
-     <div class="urgent_card">
-         <div class="left_img">
-             <img style="width: 550px;" class="img-fluid" src="./images/card.jpeg" alt="">
-         </div> 
-         <div class="main_right_content">
-          <div class="right_content">
-            <h1>Give emergency aid in Palestine</h1>
-            <p>Shared meals will provide emergency food assistance to families in Palestine.</p>
-            <div class="btn_group">
-               <button onclick="window.location.href='donate.php'" class="left">Read more</button>
-               <button onclick="window.location.href='donate.php'" class="right">Donete now</button>
+   <div class="main_urgent_card">
+    <div class="urgent_card">
+        <div class="left_img">
+            <img style="width: 550px;" class="img-fluid" src="./images/card.jpeg" alt="">
+        </div> 
+        <div class="main_right_content">
+            <div class="right_content">
+                <h1>Support Families with Food & Cash Donations</h1>
+                <p>We provide essential food supplies and direct cash assistance to those in need across the country. Your contribution can make a real difference.</p>
+                <div class="btn_group">
+                    <button onclick="window.location.href='donate.php'" class="left">Read more</button>
+                    <button onclick="window.location.href='donate.php'"  id="donateBtn"  class="right btn">Donate Now</button>
+                </div>
             </div>
-           </div>
-          </div>
-         </div>
-     </div>  
+        </div>
+    </div>
+</div>
+
      <!-- crads -->
-     <div class="card-container">
+     <!-- <div class="card-container">
       <div class="donation-card">
         <img src="./images/card1.jpg" alt="Palestine Aid">
         <div class="card-content">
@@ -96,10 +98,10 @@
             </div>
         </div>
     </div>
- </div>
-<div class="center_btn"> <button onclick="window.location.href='Fundraising.php'" class="btn">see all</button></div>
+ </div> -->
+<!-- <div class="center_btn"> <button onclick="window.location.href='Fundraising.php'" class="btn">see all</button></div> -->
 <!-- world section -->
-<section class="impact-section">
+<section style="margin-top: 100px;" class="impact-section">
         <div class="impact-container">
             <!-- Left: World Map -->
             <div class="impact-map">
@@ -173,4 +175,56 @@
 </style>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="./js/indexs_cripts.js"></script>
+<script>
+  window.onload = function () {
+  const user = localStorage.getItem("user_name");
+  const loginMsg = localStorage.getItem("loginMsg");
+  const user_id = localStorage.getItem("user_id");
+  const user_type = localStorage.getItem("user_type");
+
+  const signBtn = document.getElementById("signBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const userGreeting = document.getElementById("userGreeting");
+  const donateBtn = document.getElementById("donateBtn");
+  const donationStatusItem = document.getElementById("donationStatusItem");
+  const donationStatusLink = document.getElementById("donationStatusLink");
+
+  if (user) {
+    signBtn.classList.add("d-none");
+    logoutBtn.classList.remove("d-none");
+
+    userGreeting.textContent = `Welcome, ${user}!`;
+    userGreeting.classList.remove("d-none");
+
+    // Show donation status
+    donationStatusItem.classList.remove("d-none");
+
+    // Update donation status link with user ID
+    if (user_id) {
+      donationStatusLink.href = `view_donation_status.php?user_id=${user_id}`;
+    }
+
+    // Go to donation page
+    donateBtn.onclick = function () {
+      window.location.href = 'donate.php';
+    };
+  } else {
+    // Prompt login
+    donateBtn.onclick = function () {
+      alert("Please log in to donate.");
+      const signInModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+      signInModal.show();
+    };
+  }
+
+  // Logout
+  logoutBtn.onclick = function () {
+    localStorage.clear();
+    alert("Logged out successfully!");
+    location.reload();
+  };
+};
+
+
+</script>
 </html>

@@ -18,7 +18,7 @@
             <div class="actions_btn">
                 <button onclick="toggleDetails()" class="btn more">Read more</button>
                 <a href="volunteer_register.php" class="btn apply">Apply now</a>
-                <a href="volunteer_status.php" class="btn status">Application Status</a> <!-- New Button -->
+                <button onclick="checkStatus()" class="btn status">Application Status</button>
             </div>
 
             <!-- Hidden Section for Expanded Content -->
@@ -39,19 +39,26 @@
         </div>
     </div>
 </section>
+
 <script>
-    // Smooth Toggle Function
+    // Expand/Collapse Read More Section
     function toggleDetails() {
         const details = document.getElementById('details');
-
-        // Toggle visibility class
         details.classList.toggle('active');
-
-        // Smooth transition handling
         if (details.classList.contains('active')) {
             details.style.maxHeight = details.scrollHeight + "px";
         } else {
             details.style.maxHeight = "0";
+        }
+    }
+
+    // Prompt for email and redirect to status page
+    function checkStatus() {
+        const email = prompt("Please enter your registered email to check application status:");
+        if (email && email.includes('@')) {
+            window.location.href = `volunteer_status.php?email=${encodeURIComponent(email)}`;
+        } else if (email) {
+            alert("Please enter a valid email address.");
         }
     }
 </script>
