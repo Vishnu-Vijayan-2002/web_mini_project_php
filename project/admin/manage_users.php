@@ -34,7 +34,6 @@ include '../db/db.php'; // Adjust path if needed
             </thead>
             <tbody>
                 <?php
-                // 🔁 Fetch only users who are not admin
                 $stmt = $conn->prepare("SELECT id, name, email, user_type, created_at FROM users WHERE user_type != 'admin' ORDER BY created_at DESC");
                 $stmt->execute();
                 $result = $stmt->get_result();

@@ -24,9 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($check->num_rows > 0) {
                 $registerMsg = "Email already exists.";
             } else {
-                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
                 $insert = $conn->prepare("INSERT INTO users (name, email, password, user_type) VALUES (?, ?, ?, 'donor')");
-                $insert->bind_param("sss", $name, $email, $hashed_password);
+                $insert->bind_param("sss", $name, $email, $password);
                 
                 if ($insert->execute()) {
                     $registerMsg = "Registered successfully! Please login.";
@@ -52,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($result && $result->num_rows === 1) {
             $user = $result->fetch_assoc();
     
-            // ⚠️ Direct string comparison (assumes plain text password stored in DB)
+            // ⚠️ Direct string comparison (Assuming plain text passwords in the DB)
             if ($password === $user['password']) {
     
                 // ✅ Determine redirection page based on user type

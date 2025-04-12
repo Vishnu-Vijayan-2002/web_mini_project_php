@@ -28,6 +28,7 @@
     <a href="manage_users.php">👥 Manage Users</a>
     <a href="manage_donations.php">🍱 Manage Donations</a>
     <a href="volunteer_requests.php">🧑‍🤝‍🧑 Volunteer Requests</a>
+    <a href="volunteer__notification_requests.php">📢 Send Notification</a>
     <a href="settings.php">⚙️ Settings</a>
     <a href="#" onclick="logout()">🚪 Logout</a>
 </div>
