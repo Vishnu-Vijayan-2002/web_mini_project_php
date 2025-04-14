@@ -2,8 +2,6 @@
 include '../db/db.php';
 
 $updateMsg = "";
-
-// Get admin email from POST (since we're not using session/cookies)
 $adminEmail = $_POST['admin_email'] ?? '';
 
 // Handle form submission
@@ -13,22 +11,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($adminEmail)) {
     $password = trim($_POST['password']);
 
     if ($password !== "") {
-        $hashed = password_hash($password, PASSWORD_DEFAULT);
-        $stmt = $conn->prepare("UPDATE users SET name=?, email=?, password=? WHERE email=? AND user_type='admin'");
-        $stmt->bind_param("ssss", $name, $email, $hashed, $adminEmail);
+        // Store password as plain text in both fields (Not secure)
+        $stmt = $conn->prepare("UPDATE users SET name=?, email=?, password=?, upassword=? WHERE email=? AND user_type='admin'");
+        $stmt->bind_param("sssss", $name, $email, $password, $password, $adminEmail);
     } else {
         $stmt = $conn->prepare("UPDATE users SET name=?, email=? WHERE email=? AND user_type='admin'");
         $stmt->bind_param("sss", $name, $email, $adminEmail);
     }
 
     if ($stmt->execute()) {
-        $updateMsg = "Profile updated successfully!";
+        $updateMsg = "✅ Profile updated successfully!";
+        $adminEmail = $email;
     } else {
-        $updateMsg = "Update failed. Try again.";
+        $updateMsg = "❌ Update failed. Try again.";
     }
 }
 
-// Fetch admin details if email is provided
+// Fetch admin details
 $admin = null;
 if (!empty($adminEmail)) {
     $stmt = $conn->prepare("SELECT * FROM users WHERE email=? AND user_type='admin'");
@@ -54,14 +53,14 @@ if (!empty($adminEmail)) {
 <?php include 'admin_sidebar.php'; ?>
 
 <div class="main-content">
-    <h2 class="mb-4">Settings</h2>
+    <h2 class="mb-4">Admin Settings</h2>
 
     <?php if ($updateMsg): ?>
         <div class="alert alert-info"><?= $updateMsg ?></div>
     <?php endif; ?>
 
     <form method="POST" onsubmit="return injectEmailToForm()">
-        <input type="hidden" id="admin_email" name="admin_email" value="">
+        <input type="hidden" id="admin_email" name="admin_email" value="<?= htmlspecialchars($admin['email'] ?? '') ?>">
 
         <div class="mb-3">
             <label class="form-label">Name:</label>
@@ -75,7 +74,7 @@ if (!empty($adminEmail)) {
 
         <div class="mb-3">
             <label class="form-label">New Password (leave blank to keep current):</label>
-            <input type="password" class="form-control" name="password">
+            <input type="text" class="form-control" name="password" value="<?= htmlspecialchars($admin['upassword'] ?? '') ?>">
         </div>
 
         <button type="submit" class="btn btn-primary">Update Settings</button>
@@ -83,13 +82,23 @@ if (!empty($adminEmail)) {
 </div>
 
 <script>
-    // Frontend access control using localStorage
     const userType = localStorage.getItem('user_type');
-
     if (userType !== 'admin') {
         alert("Access denied!");
         window.location.href = '../index.php';
     }
+
+    function injectEmailToForm() {
+        document.getElementById('admin_email').value = localStorage.getItem('user_email');
+        return true;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const storedEmail = localStorage.getItem('user_email');
+        if (storedEmail) {
+            document.getElementById('admin_email').value = storedEmail;
+        }
+    });
 </script>
 
 </body>

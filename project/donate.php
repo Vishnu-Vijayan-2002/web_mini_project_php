@@ -39,33 +39,8 @@
 </div>
 
 </div>
-    <div class="card">
-      <!-- Toggle Buttons -->
-      <div class="toggle-container">
-        <button id="onceBtn" class="toggle-button active">Once</button>
-        <button id="monthlyBtn" class="toggle-button">Monthly 💛</button>
-      </div>
-    
-      <!-- Main Donation Card (Dynamic) -->
-      <div class="center-card">
-        <h2>Donate <span id="donationType">once</span></h2>
-        <p class="amount">₹<span id="donationAmount">150</span></p>
-        <p class="impact" id="impactText">This can provide food to <strong>50 people</strong> in need</p>
-      </div>
-    
-      <!-- Donation Options -->
-      <div class="amount-options">
-        <button class="donation-option" onclick="updateCard(500, 'This can provide food to <strong>7 people</strong> in need')">₹ 500</button>
-        <button class="donation-option" onclick="updateCard(1000, 'This can provide food to <strong>16 people</strong> in need')">₹ 1000</button>
-        <button class="donation-option selected" onclick="updateCard(1500, 'This can provide food to <strong>50 people</strong> in need')">₹ 1500</button>
-        <button class="donation-option" onclick="updateCard(2000, 'This can provide food to <strong>100 people</strong> in need')">₹ 2000</button>
-        <input type="number" id="customAmount" placeholder="Other amount" oninput="updateCustomCard()">
-      </div>
-    
-      <input type="email" id="emailInput"placeholder="Enter your email" class="email-input">
-      <button onclick="window.location.href='donate_meals.php'" class="meals">Donate Meals</button>
-      <button onclick="validateAndContinue()" class="cta-button">Continue</button>
-    </div>
+   
+    <button onclick="window.location.href='donate_meals.php'" class="meals">Donate Meals</button>
 </div>
 <!-- Scroll to Top Button -->
 <?php  include 'scrolling.php' ?>
