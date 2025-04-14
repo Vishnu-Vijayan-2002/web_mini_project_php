@@ -36,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (move_uploaded_file($_FILES["certificate"]["tmp_name"], $targetFilePath)) {
             $uploadedFile = $targetFilePath;
 
-            // Step 1: Insert into cash_requests
             $stmt = $conn->prepare("INSERT INTO cash_requests 
                 (full_name, age, disease, contact_info, upi_id, bank_details, required_amount) 
                 VALUES (?, ?, ?, ?, ?, ?, ?)");
@@ -44,9 +43,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $full_name, $age, $disease, $contact_info, $upi_id, $bank_details, $required_amount);
 
             if ($stmt->execute()) {
-                $request_id = $stmt->insert_id; // Get auto-incremented ID
+                $request_id = $stmt->insert_id;
 
-                // Step 2: Insert into documents table
                 $doc_stmt = $conn->prepare("INSERT INTO cash_documents (request_id, file_path, document_type) VALUES (?, ?, ?)");
                 $doc_type = "medical_certificate";
                 $doc_stmt->bind_param("iss", $request_id, $uploadedFile, $doc_type);
@@ -70,7 +68,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $conn->close();
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -93,8 +90,9 @@ $conn->close();
     <p><strong>Medical Certificate:</strong> <a href="<?= $uploadedFile ?>" target="_blank">View File</a></p>
   </div>
 <?php else: ?>
-  <h2 style="text-align:center;">Medical Donation Request Form</h2>
   <form action="" method="POST" enctype="multipart/form-data">
+    <h2>Medical Donation Request Form</h2>
+
     <label>Full Name</label>
     <input type="text" name="full_name" required>
 
