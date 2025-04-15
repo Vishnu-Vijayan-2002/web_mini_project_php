@@ -195,9 +195,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_mail'])) {
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="mb-0">Notify Volunteers</h2>
-            <a href="manage_volunteers.php" class="btn btn-outline-secondary">
-                <i class="bi bi-arrow-left"></i> Back to Volunteers
-            </a>
+            <a href="manage_volunteers.php" class="btn btn-outline-secondary">            </a>
         </div>
 
         <?php if (isset($_SESSION['error'])): ?>
