@@ -24,8 +24,7 @@ if (isset($_GET['id'])) {
 
         // Step 3: Generate password using first name + "123"
         $firstName = strtolower(explode(" ", trim($name))[0]);
-        $rawPassword = $firstName . "123";
-        $hashedPassword = password_hash($rawPassword, PASSWORD_DEFAULT);
+        $rawPassword = $firstName . "123"; // Plain password
 
         // Step 4: Check if the email already exists
         $checkStmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
@@ -36,7 +35,7 @@ if (isset($_GET['id'])) {
         if ($checkResult->num_rows === 0) {
             // Step 5: Insert into users table
             $insertStmt = $conn->prepare("INSERT INTO users (name, email, password, user_type) VALUES (?, ?, ?, ?)");
-            $insertStmt->bind_param("ssss", $name, $email, $hashedPassword, $user_type);
+            $insertStmt->bind_param("ssss", $name, $email, $rawPassword, $user_type);
             $insertStmt->execute();
         }
     }
