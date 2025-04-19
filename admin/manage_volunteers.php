@@ -16,17 +16,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && isset($_P
                 $stmt = $pdo->prepare($sql);
                 $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
                 if ($stmt->execute() && $stmt->rowCount() > 0) {
-                    $feedback_message = "Volunteer (#" . $user_id . ") approved successfully.";
-                    $feedback_type = 'success';
+                    // Fetch volunteer info for email
+                    $stmt_v = $pdo->prepare("SELECT first_name, email FROM users WHERE user_id = :user_id");
+                    $stmt_v->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+                    $stmt_v->execute();
+                    $vol = $stmt_v->fetch(PDO::FETCH_ASSOC);
+                    if ($vol) {
+                        require_once __DIR__ . '/../includes/send_mail.php';
+                        $subject = 'Your Volunteer Application is Approved!';
+                        $body = '<p>Hello ' . htmlspecialchars($vol['first_name']) . ',</p>' .
+                            '<p>Your volunteer application has been approved by the FoodShare admin. You can now log in and start helping the community!</p>' .
+                            '<p>Thank you for joining us.<br>FoodShare Team</p>';
+                        $altBody = "Hello {$vol['first_name']},\nYour volunteer application has been approved by the FoodShare admin. You can now log in and start helping the community!\nThank you for joining us.\nFoodShare Team";
+                        if (sendMail($vol['email'], $vol['first_name'], $subject, $body, $altBody)) {
+                            $feedback_message = "Volunteer (#" . $user_id . ") approved successfully and email sent.";
+                            $feedback_type = 'success';
+                        } else {
+                            $feedback_message = "Volunteer (#" . $user_id . ") approved, but failed to send email.";
+                            $feedback_type = 'warning';
+                        }
+                    } else {
+                        $feedback_message = "Volunteer approved, but could not fetch email.";
+                        $feedback_type = 'warning';
+                    }
                 } else { $feedback_message = "Failed to approve volunteer."; $feedback_type = 'danger'; }
             } elseif ($action === 'reject') {
                 $sql = "DELETE FROM users WHERE user_id = :user_id AND role = 'volunteer' AND is_approved = 0";
-                 $stmt = $pdo->prepare($sql);
-                 $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-                 if ($stmt->execute() && $stmt->rowCount() > 0) {
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+                if ($stmt->execute() && $stmt->rowCount() > 0) {
                     $feedback_message = "Volunteer (#" . $user_id . ") rejected and removed successfully.";
                     $feedback_type = 'success';
-                 } else { $feedback_message = "Failed to reject volunteer."; $feedback_type = 'danger'; }
+                } else { $feedback_message = "Failed to reject volunteer."; $feedback_type = 'danger'; }
             } else { $feedback_message = "Invalid action."; $feedback_type = 'danger'; }
         } catch (PDOException $e) {
             error_log("Volunteer action failed: " . $e->getMessage());

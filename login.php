@@ -82,55 +82,40 @@ if (isset($_GET['status']) && $_GET['status'] === 'pending') {
 require_once 'includes/header.php'; // Include Bootstrap header
 ?>
 
-<div class="container my-5"> <!-- my-5 adds vertical margin -->
+    <div class="container my-5"> <!-- my-5 adds vertical margin -->
     <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6 col-xl-5">
-
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0 text-center"><i class="bi bi-box-arrow-in-right me-2"></i>Login to Your Account</h4>
-                </div>
-                <div class="card-body p-4"> <!-- Add padding -->
-
+        <div class="col-md-7 col-lg-5 col-xl-4">
+            <div class="card shadow-lg border-0">
+                <div class="card-body p-4 p-md-5">
+                    <h4 class="mb-4 text-center fw-semibold" style="color: #ff8c00;">Login to Your Account</h4>
                     <?php if (!empty($error_message)): ?>
                         <div class="alert alert-danger" role="alert">
                             <?php echo htmlspecialchars($error_message); ?>
                         </div>
                     <?php endif; ?>
-
                     <form action="login.php" method="POST" novalidate>
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email Address</label>
-                            <input type="email" class="form-control <?php if (!empty($error_message) && strpos($error_message, 'Email') !== false) echo 'is-invalid'; ?>" id="email" name="email" value="<?php echo htmlspecialchars($submitted_email); ?>" required>
-                            <!-- Optional: add is-invalid feedback div if needed -->
+                            <label for="email" class="form-label fw-semibold">Email Address</label>
+                            <input type="email" class="form-control form-control-lg <?php if (!empty($error_message) && strpos($error_message, 'Email') !== false) echo 'is-invalid'; ?>" id="email" name="email" value="<?php echo htmlspecialchars($submitted_email); ?>" required>
                         </div>
                         <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control <?php if (!empty($error_message) && (strpos($error_message, 'password') !== false || strpos($error_message, 'Password') !== false)) echo 'is-invalid'; ?>" id="password" name="password" required>
-                             <!-- Optional: add is-invalid feedback div if needed -->
+                            <label for="password" class="form-label fw-semibold">Password</label>
+                            <input type="password" class="form-control form-control-lg <?php if (!empty($error_message) && (strpos($error_message, 'password') !== false || strpos($error_message, 'Password') !== false)) echo 'is-invalid'; ?>" id="password" name="password" required>
                         </div>
-                        <div class="d-grid mb-3"> <!-- Use d-grid for full-width button -->
-                             <button type="submit" class="btn btn  text-white" style="background-color: #ff8c00;">Login</button>
+                        <div class="d-grid mb-3">
+                            <button type="submit" class="btn btn-lg text-white fw-bold" style="background: linear-gradient(90deg, #ffb347 0%, #ff8c00 100%); border: none;">Login</button>
                         </div>
-
-                        <div class="text-center small">
-                            <a href="forgot_password.php">Forgot Password?</a>
+                        <div class="text-center small mb-2">
+                            <a href="forgot_password.php" class="link-secondary">Forgot Password?</a>
                         </div>
                     </form>
-
-                </div> <!-- /.card-body -->
-                <div class="card-footer text-center bg-light py-3">
-                     <p class="mb-0">Don't have an account? <a href="signup.php">Sign Up Here</a></p>
-                     <!-- Alternative links if signup.php isn't used -->
-                     <!-- <p class="mb-0 small">
-                        <a href="donor_register.php">Register as Donor</a> |
-                        <a href="volunteer_register.php">Register as Volunteer</a>
-                     </p> -->
                 </div>
-            </div> <!-- /.card -->
-
-        </div> <!-- /.col -->
-    </div> <!-- /.row -->
-</div> <!-- /.container -->
+                <div class="card-footer text-center bg-light py-3 border-0 rounded-bottom">
+                    <p class="mb-0">Don't have an account? <a href="signup.php" class="fw-semibold" style="color: #ff8c00;">Sign Up Here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <?php require_once 'includes/footer.php'; // Include Bootstrap footer ?>

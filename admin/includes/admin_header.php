@@ -1,31 +1,5 @@
 <?php
-// Force HTTPS only if it's detected/required for production
-// if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
-//     $location = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-//     header('HTTP/1.1 301 Moved Permanently');
-//     header('Location: ' . $location);
-//     exit;
-// }
-
-// Ensure session is started AND includes the DB connection
-// The '../' is crucial because this file is inside admin/includes/
-require_once dirname(__DIR__, 2) . '/includes/db_connect.php'; // Go up two levels for main includes
-
-// --- ADMIN AUTHENTICATION CHECK ---
-if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]) || $_SESSION["role"] !== 'admin') {
-    // Not logged in as an admin, redirect to main login
-    header("Location: ../login.php?error=unauthorized"); // Use '../' to go up one level
-    exit;
-}
-// --- END ADMIN AUTHENTICATION CHECK ---
-
-// Optional: Regenerate session ID periodically for added security
-if (!isset($_SESSION['last_regen'])) $_SESSION['last_regen'] = time();
-if (time() - $_SESSION['last_regen'] > 1800) { // e.g., every 30 minutes
-    session_regenerate_id(true);
-    $_SESSION['last_regen'] = time();
-}
-
+require_once 'admin_auth.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -118,7 +92,13 @@ if (time() - $_SESSION['last_regen'] > 1800) { // e.g., every 30 minutes
         <div class="dropdown">
           <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="bi bi-person-circle me-2 fs-4"></i>
-            <strong><?php echo htmlspecialchars($_SESSION['first_name']); ?></strong>
+            <strong>
+                <?php
+                echo isset($_SESSION['first_name']) && $_SESSION['first_name']
+                    ? htmlspecialchars($_SESSION['first_name'])
+                    : 'Admin';
+                ?>
+            </strong>
           </a>
           <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end text-small shadow" aria-labelledby="dropdownUser">
             <li><a class="dropdown-item" href="../logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
@@ -155,6 +135,26 @@ if (time() - $_SESSION['last_regen'] > 1800) { // e.g., every 30 minutes
                         <i class="bi bi-people me-2"></i> Users
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'send_email.php') ? 'active' : ''; ?>" href="send_email.php">
+                        <i class="bi bi-envelope-fill me-2"></i> Send Email
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'password_resets.php') ? 'active' : ''; ?>" href="password_resets.php">
+                        <i class="bi bi-key-fill me-2"></i> Password Resets
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'manage_cash_donations.php') ? 'active' : ''; ?>" href="manage_cash_donations.php">
+                        <i class="bi bi-currency-rupee me-2"></i> Cash Donations
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'manage_help_requests.php') ? 'active' : ''; ?>" href="manage_help_requests.php">
+                        <i class="bi bi-clipboard-heart me-2"></i> Help Requests
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -172,8 +172,5 @@ if (time() - $_SESSION['last_regen'] > 1800) { // e.g., every 30 minutes
                 </li>
             </ol>
         </nav>
-
         <!-- Page Content Start -->
         <!-- The specific page content (like tables) will go here -->
-
- 

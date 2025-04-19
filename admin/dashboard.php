@@ -163,4 +163,4 @@ try {
 </div>
 
 
-<?php require_once 'includes/admin_footer.php';  ?>
+<?php require_once 'includes/admin_footer.php'; ?>

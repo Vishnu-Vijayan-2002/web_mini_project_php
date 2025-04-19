@@ -1,21 +1,31 @@
 <?php
-define('DB_SERVER', 'localhost'); // Or your DB host
-define('DB_USERNAME', 'root');    // Your DB username
-define('DB_PASSWORD', '');        // Your DB password
-define('DB_NAME', 'food_charity_db'); // Your DB name
+define('DB_SERVER', 'localhost');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', '');
+define('DB_NAME', 'food_charity_db');
 
-// Attempt to connect to MySQL database using PDO
 try {
     $pdo = new PDO("mysql:host=" . DB_SERVER . ";dbname=" . DB_NAME, DB_USERNAME, DB_PASSWORD);
-    // Set the PDO error mode to exception
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Ensure users table exists and has reset_token_hash and reset_token_expiry columns
+    $pdo->exec("CREATE TABLE IF NOT EXISTS users (
+        user_id INT AUTO_INCREMENT PRIMARY KEY,
+        first_name VARCHAR(100),
+        last_name VARCHAR(100),
+        email VARCHAR(100) UNIQUE,
+        password VARCHAR(255),
+        role VARCHAR(50),
+        is_approved TINYINT DEFAULT 0,
+        registration_date DATETIME,
+        reset_token_hash VARCHAR(255) DEFAULT NULL,
+        reset_token_expiry DATETIME DEFAULT NULL
+    )");
 } catch(PDOException $e) {
-    // Use a generic message for the public user
-    error_log("Database connection failed: " . $e->getMessage()); // Log detailed error
+    error_log("Database connection failed: " . $e->getMessage());
     die("ERROR: Could not connect to the database. Please try again later.");
 }
 
-// Start session if not already started
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }

@@ -1,10 +1,22 @@
 <?php
 require_once 'includes/db_connect.php'; // Ensure session started and DB connected
-//require_once 'includes/functions.php'; // Assuming you might have helper functions (optional)
+require_once __DIR__ . '/includes/send_mail.php'; // Use central mail helper
 
 $errors = [];
 $success_message = '';
-$submitted_email = '';
+$submitted_email = ''; // To repopulate the form field on error
+
+function sendPasswordResetEmail($toEmail, $toName, $resetLink) {
+    $subject = 'Password Reset Request - FoodShare Connect';
+    $body = '<p>Hello ' . htmlspecialchars($toName) . ',</p>' .
+        '<p>You requested a password reset. Click the link below to set a new password:</p>' .
+        '<p><a href="' . htmlspecialchars($resetLink) . '">' . htmlspecialchars($resetLink) . '</a></p>' .
+        '<p>This link will expire in 1 hour.</p>' .
+        '<p>If you did not request this, please ignore this email.</p>' .
+        '<p>Regards,<br>The FoodShare Team</p>';
+    $altBody = "Hello $toName,\nYou requested a password reset. Visit this link: $resetLink\nThis link will expire in 1 hour. If you did not request this, please ignore this email. Regards, The FoodShare Connect Team";
+    return sendMail($toEmail, $toName, $subject, $body, $altBody);
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_forgot_password'])) {
     $submitted_email = trim($_POST['email'] ?? '');
@@ -13,81 +25,59 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_forgot_password
         $errors[] = "Please enter a valid email address.";
     } else {
         try {
-            // Find user by email (only donors or volunteers)
-            $sql_find = "SELECT user_id, first_name FROM users WHERE email = :email AND role IN ('donor', 'volunteer')";
+            // Find the user by email
+            $sql_find = "SELECT user_id, first_name, email FROM users WHERE email = :email";
             $stmt_find = $pdo->prepare($sql_find);
-            $stmt_find->bindParam(':email', $submitted_email);
+            $stmt_find->bindParam(':email', $submitted_email, PDO::PARAM_STR);
             $stmt_find->execute();
             $user = $stmt_find->fetch(PDO::FETCH_ASSOC);
 
             if ($user) {
-                // --- Generate Secure Token ---
-                $token_bytes = random_bytes(32); // Generate 32 random bytes
-                $token = bin2hex($token_bytes); // Convert to hexadecimal string (64 chars)
+                // User found, generate token and update database
+                $token_bytes = random_bytes(32); // Generate a secure random token
+                $token = bin2hex($token_bytes); // Convert to hex for use in URL
+                $token_hash = password_hash($token, PASSWORD_DEFAULT); // Hash the token for storage
 
-                // --- Generate Expiry Time (e.g., 1 hour from now) ---
-                $expires = new DateTime('NOW');
-                $expires->add(new DateInterval('PT1H')); // PT1H = Period Time 1 Hour
-                $expiry_formatted = $expires->format('Y-m-d H:i:s');
+                // *** MODIFICATION START ***
+                // Use MySQL's DATE_ADD and NOW() to calculate expiry directly in the database
+                // This avoids PHP/MySQL timezone discrepancies
+                $stmt_update = $pdo->prepare("UPDATE users SET
+                                                  reset_token_hash = :token_hash,
+                                                  reset_token_expiry = DATE_ADD(NOW(), INTERVAL 1 HOUR)
+                                              WHERE user_id = :uid");
+                $stmt_update->execute([
+                    ':token_hash' => $token_hash,
+                    // No ':expiry' parameter needed now, MySQL handles it
+                    ':uid' => $user['user_id']
+                ]);
+                // *** MODIFICATION END ***
 
-                // --- Hash the Token for Storage ---
-                // Use password_hash for consistency and security features (cost, algorithm)
-                $token_hash = password_hash($token, PASSWORD_DEFAULT);
+                // Construct the reset link (ensure the base URL is correct for your environment)
+                // TODO: Replace 'http://localhost/FoodShare/' with your actual base URL if different
+                $base_url = rtrim((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']), '/\\') ;
+                $reset_link = $base_url . "/reset_password.php?token=" . $token; // Send the raw token in the link
 
-                // --- Update User Record ---
-                $sql_update = "UPDATE users SET reset_token_hash = :token_hash, reset_token_expiry = :expiry WHERE user_id = :user_id";
-                $stmt_update = $pdo->prepare($sql_update);
-                $stmt_update->bindParam(':token_hash', $token_hash);
-                $stmt_update->bindParam(':expiry', $expiry_formatted);
-                $stmt_update->bindParam(':user_id', $user['user_id']);
-
-                if ($stmt_update->execute()) {
-                    // --- Construct Reset Link ---
-                    // IMPORTANT: Replace 'https://yourdomain.com' with your actual domain and path
-                    $reset_link = "http://localhost/FoodShare/reset_password.php?token=" . $token; // Use the RAW token in the link
-
-                    // --- Send Email (Simulation) ---
-                    // !! IMPORTANT !! In a real application, use a library like PHPMailer
-                    // or an email service API (SendGrid, Mailgun) to send the actual email.
-                    // Do NOT rely on PHP's mail() function on shared hosting without configuration.
-
-                    $email_subject = "Password Reset Request - FoodShare Connect";
-                    $email_body = "Hello " . htmlspecialchars($user['first_name']) . ",\n\n";
-                    $email_body .= "You requested a password reset. Click the link below to set a new password:\n\n";
-                    $email_body .= $reset_link . "\n\n";
-                    $email_body .= "This link will expire in 1 hour.\n\n";
-                    $email_body .= "If you did not request this, please ignore this email.\n\n";
-                    $email_body .= "Regards,\nThe FoodShare Connect Team";
-
-                    // Simulated sending: Display a success message and the link (for testing)
-                    // In production, replace this block with actual email sending code
-                    $success_message = "If an account with that email exists, a password reset link has been sent (check spam folder)."; // Generic message
-                    // For testing ONLY - REMOVE THIS IN PRODUCTION
-                    $success_message .= "<br><br><strong>Testing Only (Remove in Production):</strong><br>Reset Link: <a href='" . htmlspecialchars($reset_link) . "'>" . htmlspecialchars($reset_link) . "</a>";
-                    // error_log("Password reset link for " . $submitted_email . ": " . $reset_link); // Log link for testing
-
-                    // if (mail($submitted_email, $email_subject, $email_body)) {
-                    //      $success_message = "If an account with that email exists, a password reset link has been sent.";
-                    // } else {
-                    //      error_log("Failed to send password reset email to: " . $submitted_email);
-                    //      $errors[] = "Could not send the reset email. Please contact support.";
-                    // }
-
+                // Send the email
+                if (sendPasswordResetEmail($user['email'], $user['first_name'], $reset_link)) {
+                    $success_message = "A password reset link has been sent to " . htmlspecialchars($user['email']) . " (please check your spam folder if you don't see it).";
+                    error_log("Password reset email initiated successfully for " . $user['email']);
                 } else {
-                    $errors[] = "Could not update user record. Please try again.";
+                    $errors[] = "There was an issue sending the password reset email. Please try again later or contact support.";
+                     error_log("Failed to send password reset email for " . $user['email']);
                 }
 
             } else {
-                // Email not found or not a donor/volunteer
-                // Show a generic success message to prevent user enumeration
-                $success_message = "If an account with that email exists, a password reset link has been sent.";
+                // User not found, show a generic message to avoid revealing which emails are registered
+                // Log this case for admin awareness if needed
+                error_log("Password reset requested for non-existent email: " . $submitted_email);
+                $success_message = "If an account with that email address exists, a password reset link has been sent. Please check your inbox and spam folder.";
             }
         } catch (PDOException $e) {
-            error_log("Forgot Password Error: " . $e->getMessage());
-            $errors[] = "An error occurred. Please try again later.";
-        } catch (Exception $e) {
-             error_log("Token Generation Error: " . $e->getMessage());
-             $errors[] = "An error occurred while generating the reset link.";
+            error_log("Forgot Password DB Error: " . $e->getMessage() . " for email: " . $submitted_email);
+            $errors[] = "A database error occurred. Please try again later.";
+        } catch (Exception $e) { // Catch potential errors from random_bytes or mailer
+            error_log("Forgot Password General Error: " . $e->getMessage() . " for email: " . $submitted_email);
+            $errors[] = "An unexpected error occurred while processing your request.";
         }
     }
 }
@@ -103,7 +93,7 @@ require_once 'includes/header.php'; // Include Bootstrap header
                     <h4 class="mb-0"><i class="bi bi-key-fill me-2"></i>Forgot Password</h4>
                 </div>
                 <div class="card-body">
-                    <p class="card-text">Enter the email address associated with your Donor or Volunteer account. We'll send you a link to reset your password.</p>
+                    <p class="card-text">Enter the email address associated with your account. If the email exists in our system, we'll send you a link to reset your password.</p>
 
                     <?php if (!empty($errors)): ?>
                         <div class="alert alert-danger" role="alert">
@@ -115,18 +105,22 @@ require_once 'includes/header.php'; // Include Bootstrap header
 
                     <?php if ($success_message): ?>
                         <div class="alert alert-success" role="alert">
-                            <?php echo $success_message; // Allow HTML for the test link ?>
+                            <?php echo $success_message; // Success message already handles htmlspecialchars where needed ?>
                         </div>
                     <?php endif; ?>
 
-                    <?php if (!$success_message): // Only show form if not successfully submitted ?>
+                    <?php // Only show form if there's no success message (or if there were errors preventing success) ?>
+                    <?php if (empty($success_message) || !empty($errors)): ?>
                     <form action="forgot_password.php" method="POST" novalidate>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address</label>
-                            <input type="email" class="form-control <?php echo (!empty($errors) && strpos(implode(' ', $errors), 'email') !== false) ? 'is-invalid' : ''; ?>" id="email" name="email" value="<?php echo htmlspecialchars($submitted_email); ?>" required>
-                            <div class="invalid-feedback">
-                                Please provide a valid email address.
-                            </div>
+                            <input type="email" class="form-control <?php echo (!empty($errors) && strpos(implode(' ', $errors), 'email') !== false) ? 'is-invalid' : ''; ?>" id="email" name="email" value="<?php echo htmlspecialchars($submitted_email); ?>" required aria-describedby="emailHelp">
+                             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                             <?php if (!empty($errors) && strpos(implode(' ', $errors), 'email') !== false): ?>
+                                <div class="invalid-feedback">
+                                    Please provide a valid email address.
+                                </div>
+                            <?php endif; ?>
                         </div>
                         <button type="submit" name="submit_forgot_password" class="btn btn-primary w-100">Send Password Reset Link</button>
                     </form>

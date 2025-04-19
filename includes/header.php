@@ -50,7 +50,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <div class="collapse navbar-collapse" id="mainNavbar">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="index.php#about-us">About Us</a> <!-- Updated href -->
+          <a class="nav-link" href="./aboutus.php">About Us</a> <!-- Updated href -->
         </li>
         <li class="nav-item">
           <a class="nav-link" href="index.php#how-it-works">How it works</a>

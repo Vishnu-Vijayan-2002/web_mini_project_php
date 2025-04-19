@@ -97,15 +97,10 @@ require_once 'includes/header.php'; // Include Bootstrap header
 
 <div class="container my-5">
     <div class="row justify-content-center">
-        <div class="col-md-10 col-lg-8">
-
-            <div class="card shadow-sm">
-                 <div class="card-header  text-white" style='background-color: #ff8c00;'>
-                    <h4 class="mb-0"><i class="bi bi-gift-fill me-2"></i>Register as a Food Donor</h4>
-                </div>
-                <div class="card-body p-4">
-                    <p class="card-text mb-4">Thank you for your generosity! Please fill out the form below to get started.</p>
-
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0">
+                <div class="card-body p-4 p-md-5">
+                    <h4 class="mb-4 fw-semibold text-center" style="color: #ff8c00;">Donor Registration</h4>
                     <?php if (!empty($errors)): ?>
                         <div class="alert alert-danger" role="alert">
                             <h5 class="alert-heading">Please fix the following errors:</h5>
@@ -126,51 +121,51 @@ require_once 'includes/header.php'; // Include Bootstrap header
                     <form action="donor_register.php" method="POST" novalidate>
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="first_name" class="form-label">First Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control <?php echo isset($errors['first_name']) ? 'is-invalid' : ''; ?>" id="first_name" name="first_name" value="<?php echo htmlspecialchars($form_values['first_name']); ?>" required>
+                                <label for="first_name" class="form-label fw-semibold">First Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control form-control-lg <?php echo isset($errors['first_name']) ? 'is-invalid' : ''; ?>" id="first_name" name="first_name" value="<?php echo htmlspecialchars($form_values['first_name']); ?>" required>
                                 <div class="invalid-feedback"><?php echo htmlspecialchars($errors['first_name'] ?? ''); ?></div>
                             </div>
                             <div class="col-md-6">
-                                <label for="last_name" class="form-label">Last Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control <?php echo isset($errors['last_name']) ? 'is-invalid' : ''; ?>" id="last_name" name="last_name" value="<?php echo htmlspecialchars($form_values['last_name']); ?>" required>
-                                 <div class="invalid-feedback"><?php echo htmlspecialchars($errors['last_name'] ?? ''); ?></div>
+                                <label for="last_name" class="form-label fw-semibold">Last Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control form-control-lg <?php echo isset($errors['last_name']) ? 'is-invalid' : ''; ?>" id="last_name" name="last_name" value="<?php echo htmlspecialchars($form_values['last_name']); ?>" required>
+                                <div class="invalid-feedback"><?php echo htmlspecialchars($errors['last_name'] ?? ''); ?></div>
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
-                            <input type="email" class="form-control <?php echo isset($errors['email']) ? 'is-invalid' : ''; ?>" id="email" name="email" value="<?php echo htmlspecialchars($form_values['email']); ?>" required>
-                             <div class="invalid-feedback"><?php echo htmlspecialchars($errors['email'] ?? ''); ?></div>
+                            <label for="email" class="form-label fw-semibold">Email Address <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control form-control-lg <?php echo isset($errors['email']) ? 'is-invalid' : ''; ?>" id="email" name="email" value="<?php echo htmlspecialchars($form_values['email']); ?>" required>
+                            <div class="invalid-feedback"><?php echo htmlspecialchars($errors['email'] ?? ''); ?></div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
-                                <input type="password" class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : ''; ?>" id="password" name="password" required aria-describedby="passwordHelp">
+                                <label for="password" class="form-label fw-semibold">Password <span class="text-danger">*</span></label>
+                                <input type="password" class="form-control form-control-lg <?php echo isset($errors['password']) ? 'is-invalid' : ''; ?>" id="password" name="password" required aria-describedby="passwordHelp">
                                 <div id="passwordHelp" class="form-text small">Must be at least 6 characters long.</div>
                                 <div class="invalid-feedback"><?php echo htmlspecialchars($errors['password'] ?? ''); ?></div>
                             </div>
                             <div class="col-md-6">
-                                <label for="confirm_password" class="form-label">Confirm Password <span class="text-danger">*</span></label>
-                                <input type="password" class="form-control <?php echo isset($errors['confirm_password']) ? 'is-invalid' : ''; ?>" id="confirm_password" name="confirm_password" required>
+                                <label for="confirm_password" class="form-label fw-semibold">Confirm Password <span class="text-danger">*</span></label>
+                                <input type="password" class="form-control form-control-lg <?php echo isset($errors['confirm_password']) ? 'is-invalid' : ''; ?>" id="confirm_password" name="confirm_password" required>
                                 <div class="invalid-feedback"><?php echo htmlspecialchars($errors['confirm_password'] ?? ''); ?></div>
                             </div>
                         </div>
 
-                         <div class="mb-3">
-                            <label for="phone" class="form-label">Phone Number (Optional)</label>
-                            <input type="tel" class="form-control" id="phone" name="phone" value="<?php echo htmlspecialchars($form_values['phone']); ?>" placeholder="e.g., 123-456-7890">
-                         </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label fw-semibold">Phone Number (Optional)</label>
+                            <input type="tel" class="form-control form-control-lg" id="phone" name="phone" value="<?php echo htmlspecialchars($form_values['phone']); ?>" placeholder="e.g., 123-456-7890">
+                        </div>
 
-                         <hr class="my-4">
-                         <h5 class="mb-3">Optional Address Details</h5>
+                        <hr class="my-4">
+                        <h5 class="mb-3 fw-semibold">Optional Address Details</h5>
 
-                         <div class="mb-3">
+                        <div class="mb-3">
                             <label for="address" class="form-label">Default Pickup Street Address</label>
                             <textarea class="form-control" id="address" name="address" rows="2"><?php echo htmlspecialchars($form_values['address']); ?></textarea>
-                         </div>
+                        </div>
 
-                         <div class="row mb-3">
+                        <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="city" class="form-label">City</label>
                                 <input type="text" class="form-control" id="city" name="city" value="<?php echo htmlspecialchars($form_values['city']); ?>">
@@ -179,21 +174,20 @@ require_once 'includes/header.php'; // Include Bootstrap header
                                 <label for="postal_code" class="form-label">Postal Code</label>
                                 <input type="text" class="form-control" id="postal_code" name="postal_code" value="<?php echo htmlspecialchars($form_values['postal_code']); ?>">
                             </div>
-                         </div>
+                        </div>
 
-                        <div class="d-grid gap-2 mt-4"> <!-- Full width button -->
-                            <button type="submit" class="btn btn-success btn-lg">Register as Donor</button>
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-lg text-white fw-bold" style="background: linear-gradient(90deg, #ffb347 0%, #ff8c00 100%); border: none;">Register as Donor</button>
                         </div>
                     </form>
                     <?php endif; // End hide form on success ?>
-                </div> <!-- /.card-body -->
-                 <div class="card-footer text-center bg-light py-3">
-                     <p class="mb-0">Already have an account? <a href="login.php">Login here</a>.</p>
-                 </div>
-            </div> <!-- /.card -->
-
-        </div> <!-- /.col -->
-    </div> <!-- /.row -->
-</div> <!-- /.container -->
+                </div>
+                <div class="card-footer text-center bg-light py-3 border-0 rounded-bottom">
+                    <p class="mb-0">Already have an account? <a href="login.php" class="fw-semibold" style="color: #ff8c00;">Login here</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <?php require_once 'includes/footer.php'; // Include Bootstrap footer ?>
