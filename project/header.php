@@ -7,14 +7,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./header.css">
-    <title>Responsive Navbar</title>
+    <title>Fooshar</title> <!-- Updated Title -->
 </head>
 <body>
-
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg bg-light fixed-top shadow-sm">
   <div class="container-fluid">
-    <a class="navbar-brand" onclick="window.location.href='index.php'" href="#">
+    <a class="navbar-brand" href="index.php">
       <img src="./images/food.png" alt="Logo">
     </a>
 
@@ -27,13 +26,13 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
         <!-- <li class="nav-item">
-          <a class="nav-link" onclick="window.location.href='Fundraising.php'" href="#">Fundraising goals</a>
+          <a class="nav-link" href="Fundraising.php">Fundraising goals</a>
         </li> -->
         <li class="nav-item">
-          <a class="nav-link" onclick="window.location.href='about.php'" href="#">About us</a>
+          <a class="nav-link" href="about.php">About us</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" onclick="window.location.href='FAQs.php'" href="#">FAQs</a>
+          <a class="nav-link" href="FAQs.php">FAQs</a>
         </li>
         <!-- Hidden initially -->
         <li class="nav-item d-none" id="donationStatusItem">
@@ -59,9 +58,7 @@
 <script>
 window.onload = function () {
   const user = localStorage.getItem("user_name");
-  const loginMsg = localStorage.getItem("loginMsg");
   const user_id = localStorage.getItem("user_id");
-  const user_type = localStorage.getItem("user_type");
 
   const signBtn = document.getElementById("signBtn");
   const logoutBtn = document.getElementById("logoutBtn");
@@ -93,9 +90,7 @@ window.onload = function () {
     // Prompt login
     donateBtn.onclick = function () {
       alert("Please log in to donate.");
-      window.location.href='index.php'
-      const signInModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
-      signInModal.show();
+      window.location.href = 'index.php';
     };
   }
 
